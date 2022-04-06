@@ -1,0 +1,64 @@
+---
+title: "Linear Algebra, Mike X Cohen (Udemy)"
+author: "Antony H. Clark"
+date: '2022-04-06'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+library(plotly)
+library(dplyr)
+library(tidyr)
+
+# ********************************************************************************
+knitr::opts_chunk$set(echo = FALSE)
+# cat(paste0("# ",paste0(rep("*",80),collapse="")))
+source("functions/functions.R") # angle between two vectors v, w
+
+
+
+```
+
+## Intro
+
+This R Markdown document is a workbook following the Udemy **Linear Algebra** course by Mike X. Cohen:
+ <https://www.udemy.com/course/linear-algebra-theory-and-implementation/>.
+
+## Some LaTeX
+$$ \hat{a}=\frac{\vec{a}}{\left | \vec{a} \right |} $$
+## Plot a plane
+
+```{r plotlyPlane3d}
+# ********************************************************************************
+# https://stackoverflow.com/questions/70699740/
+this_res <- 2
+x <- seq(from=0, to=8, by=this_res)
+y <- seq(from=0, to=8, by=this_res)
+z1 <- x+y #For the first plane
+
+points <- tibble(x = x, y = y, z = z1)
+# prepare all combination of x and y, and calculate z
+xyz <- tidyr::crossing(x, y) %>%
+  mutate(z = x+y)
+
+plot_ly(x = ~x, y = ~y, z = ~z, type = "mesh3d", data = xyz) %>% 
+  add_markers(~ x, ~y, ~z, data = points)
+
+```
+
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
