@@ -1,0 +1,10 @@
+p <- plot_ly(x = 1:10,type = "histogram")
+tmp_dir <- "C:/Users/user/Documents/R/tmp/"
+file.create(paste0(tmp_dir,"tmp.png"),showWarnings = F)
+file.exists(paste0(tmp_dir,"tmp.png"))
+tmpFile <- paste0(tmp_dir,"tmp.png")
+save_image(p, tmpFile)
+file.show(tmpFile)
+fig <- plot_ly(z = ~volcano) %>% add_surface()
+save_image(fig,tmpFile)
+file.show(tmpFile)

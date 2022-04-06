@@ -2,19 +2,32 @@
 title: "Linear Algebra, Mike X Cohen (Udemy)"
 author: "Antony H. Clark"
 date: '2022-04-06'
-output: html_document
+number_sections: true
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    toc_depth: 3
+  pdf_document:
+    toc: yes
+
 ---
 
 ```{r setup, include=FALSE}
 
 library(plotly)
+library(plot3D)
 library(dplyr)
 library(tidyr)
 
 # ********************************************************************************
-knitr::opts_chunk$set(echo = FALSE)
-# cat(paste0("# ",paste0(rep("*",80),collapse="")))
-source("functions/functions.R") # angle between two vectors v, w
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE
+  )
+
+source("functions/functions.R") # various helper functions
 
 
 
@@ -26,39 +39,36 @@ This R Markdown document is a workbook following the Udemy **Linear Algebra** co
  <https://www.udemy.com/course/linear-algebra-theory-and-implementation/>.
 
 ## Some LaTeX
+
 $$ \hat{a}=\frac{\vec{a}}{\left | \vec{a} \right |} $$
+
 ## Plot a plane
 
-```{r plotlyPlane3d}
+```{r plotPlane-plot3D}
 # ********************************************************************************
-# https://stackoverflow.com/questions/70699740/
-this_res <- 2
-x <- seq(from=0, to=8, by=this_res)
-y <- seq(from=0, to=8, by=this_res)
-z1 <- x+y #For the first plane
-
-points <- tibble(x = x, y = y, z = z1)
-# prepare all combination of x and y, and calculate z
-xyz <- tidyr::crossing(x, y) %>%
-  mutate(z = x+y)
-
-plot_ly(x = ~x, y = ~y, z = ~z, type = "mesh3d", data = xyz) %>% 
-  add_markers(~ x, ~y, ~z, data = points)
+x <- 0:4
+y <- 0:4
+z <- outer(x,y,function(x,y) x+y)
+#plot3D::persp3D(x,y,z,colvar = NULL,theta = -45,phi = 0)
+plot3D::persp3D(x,y,z,colvar = NULL,theta = -20,phi = 0)
+plot3D::arrows3D(0,0,0,1,1,2,add = T,col = "red")
 
 ```
 
 
+## Output format
 
-```{r cars}
-summary(cars)
-```
+`r knitr::is_latex_output()`
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+
+
+
+
+
+
